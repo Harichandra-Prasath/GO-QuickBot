@@ -33,13 +33,11 @@ func getTranscript() string {
 	writer.WriteField("model", "whisper-1")
 	writer.Close()
 
-	client := &http.Client{}
-
 	req, _ := http.NewRequest("POST", "https://api.openai.com/v1/audio/transcriptions", form)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("OPENAI_KEY")))
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
-	openai_res, err := client.Do(req)
+	openai_res, err := Client.Do(req)
 	check_err(err)
 
 	defer openai_res.Body.Close()

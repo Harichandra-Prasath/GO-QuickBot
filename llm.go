@@ -57,8 +57,7 @@ func getResponse(question string) string {
 	request.Header.Add("Content-Type", "application/json")
 	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("OPENAI_KEY")))
 
-	client := &http.Client{}
-	resp, _ := client.Do(request)
+	resp, _ := Client.Do(request)
 
 	resp_body := resp.Body
 	defer resp.Body.Close()
