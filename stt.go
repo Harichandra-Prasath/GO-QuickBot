@@ -34,16 +34,21 @@ func (P *PipeLine) getTranscript() string {
 	writer.Close()
 
 	req, _ := http.NewRequest("POST", "https://api.openai.com/v1/audio/transcriptions", form)
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("OPENAI_KEY")))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", OPENAI_KEY))
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
-	openai_res, err := Client.Do(req)
+	resp, err := Client.Do(req)
 	check_err(err)
 
-	defer openai_res.Body.Close()
-	bodyText, err := io.ReadAll(openai_res.Body)
+	defer resp.Body.Close()
+	content, err := io.ReadAll(resp.Body)
 	check_err(err)
 
-	check_err(json.Unmarshal(bodyText, &response))
+	if resp.StatusCode != 200 {
+		fmt.Println(string(content))
+		return ""
+	}
+
+	check_err(json.Unmarshal(content, &response))
 	return response.Text
 }

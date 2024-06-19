@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 type LLM_Response struct {
@@ -55,14 +54,19 @@ func (P *PipeLine) getResponse(question string) string {
 
 	request, _ := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", body)
 	request.Header.Add("Content-Type", "application/json")
-	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("OPENAI_KEY")))
+	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", OPENAI_KEY))
 
 	resp, _ := Client.Do(request)
-
 	resp_body := resp.Body
 	defer resp.Body.Close()
 
 	content, _ := io.ReadAll(resp_body)
+
+	if resp.StatusCode != 200 {
+		fmt.Println(string(content))
+		return ""
+	}
+
 	json.Unmarshal(content, &response)
 
 	assistant_message := response.Choices[0].Message

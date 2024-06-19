@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"os/exec"
 )
 
@@ -30,7 +29,7 @@ func (P *PipeLine) Speak(text string) {
 
 	request, _ := http.NewRequest("POST", "https://api.openai.com/v1/audio/speech", body)
 	request.Header.Add("Content-type", "application/json")
-	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("OPENAI_KEY")))
+	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", OPENAI_KEY))
 
 	chunk := make([]byte, 512)
 
