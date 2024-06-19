@@ -15,7 +15,7 @@ type SpeechBody struct {
 	Text  string `json:"input"`
 }
 
-func Speak(text string) {
+func (P *PipeLine) Speak(text string) {
 
 	payload := SpeechBody{
 		Model: "tts-1",

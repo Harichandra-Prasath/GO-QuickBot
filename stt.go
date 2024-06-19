@@ -15,7 +15,7 @@ type STT_Response struct {
 	Text string
 }
 
-func getTranscript() string {
+func (P *PipeLine) getTranscript() string {
 
 	var response STT_Response
 

@@ -30,20 +30,20 @@ type CompletionBody struct {
 	Stream   bool      `json:"stream"`
 }
 
-func getResponse(question string) string {
+func (P *PipeLine) getResponse(question string) string {
 
-	var messages []Message
 	var response LLM_Response
 
-	m := Message{
+	user_message := Message{
 		Role:    "user",
 		Content: question,
 	}
-	messages = append(messages, m)
+
+	P.LLM_History = append(P.LLM_History, user_message)
 
 	cb := CompletionBody{
 		Model:    "gpt-4o",
-		Messages: messages,
+		Messages: P.LLM_History,
 		Stream:   false,
 	}
 
@@ -65,5 +65,9 @@ func getResponse(question string) string {
 	content, _ := io.ReadAll(resp_body)
 	json.Unmarshal(content, &response)
 
-	return response.Choices[0].Message.Content
+	assistant_message := response.Choices[0].Message
+
+	P.LLM_History = append(P.LLM_History, assistant_message)
+
+	return assistant_message.Content
 }

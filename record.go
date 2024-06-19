@@ -21,9 +21,6 @@ func Listen() {
 	check_err(err)
 	defer f.Close()
 
-	portaudio.Initialize()
-	defer portaudio.Terminate()
-
 	buffer := make([]int16, 64)
 
 	recorder, err := portaudio.OpenDefaultStream(1, 0, 44100, len(buffer), buffer)
