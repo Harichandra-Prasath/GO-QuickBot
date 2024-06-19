@@ -11,13 +11,13 @@ import (
 	"path/filepath"
 )
 
-type Response struct {
+type STT_Response struct {
 	Text string
 }
 
 func getTranscript() string {
 
-	var response Response
+	var response STT_Response
 
 	form := new(bytes.Buffer)
 	writer := multipart.NewWriter(form)
