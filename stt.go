@@ -50,5 +50,7 @@ func (P *PipeLine) getTranscript() string {
 	}
 
 	check_err(json.Unmarshal(content, &response))
+
+	fmt.Printf("\n\nUser: %s\n", response.Text)
 	return response.Text
 }

@@ -72,6 +72,7 @@ func (P *PipeLine) getResponse(question string) string {
 	assistant_message := response.Choices[0].Message
 
 	P.LLM_History = append(P.LLM_History, assistant_message)
+	fmt.Printf("Assistant: %s\n\n", assistant_message.Content)
 
 	return assistant_message.Content
 }

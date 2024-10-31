@@ -12,7 +12,7 @@ import (
 )
 
 func Listen() {
-	fmt.Println("Listening... Press ctrl + c to stop")
+	fmt.Printf("Listening... Press ctrl + c to stop:")
 
 	sig_chan := make(chan os.Signal, 1)
 	signal.Notify(sig_chan, os.Interrupt, syscall.SIGTERM)
